@@ -29,13 +29,17 @@ def din(sock, cnt):
         return ""
 
 def dout(sock, msg):
-    if type(msg) != bytes:
-        msg_list = msg.strip().split("\r\n")
-        msg = msg.encode()
-    else:
-        msg_list = msg.decode().strip().split("\r\n")
-    sock.send(msg)
-    print(f"\033[1;32;40m[<-]\033[0m {msg_list}")
+    try:
+        if type(msg) != bytes:
+            msg = msg.encode()
+            msg_list = msg.strip().split("\r\n")
+        sock.send(msg)
+
+        if type(msg) == bytes:
+            msg_list = msg.decode().strip().split("\r\n")
+        print(f"\033[1;32;40m[<-]\033[0m {msg_list}")
+    except UnicodeDecodeError:
+        return ""
 
 def decode_shell_result(s):
     return "\n".join(s.split("\r\n")[1:-1])
