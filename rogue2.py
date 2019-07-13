@@ -53,6 +53,8 @@ class RogueServer:
         elif "breakpoint" in data:
             resp = self.payload("r", "keys", "*")
             phase = 4
+        else:
+            phase = 5
         return resp, phase
 
     def payload(self, *commands):
@@ -71,7 +73,7 @@ class RogueServer:
                 break
             resp, phase = self.handle(data)
             dout(cli, resp)
-            if phase == 4:
+            if phase == 5:
                 break
 
         return
