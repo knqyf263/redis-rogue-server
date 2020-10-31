@@ -32,7 +32,7 @@ def dout(sock, msg):
     try:
         if type(msg) != bytes:
             msg = msg.encode()
-            msg_list = msg.strip().split("\r\n")
+            msg_list = msg.decode('UTF-8').strip().split("\r\n")
         sock.send(msg)
 
         if type(msg) == bytes:
