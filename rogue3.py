@@ -63,7 +63,7 @@ class Remote:
         return buf
 
     def shell_cmd(self, cmd):
-        self.send(mk_cmd_arr(['system.exec', f"{cmd}"]))
+        self.send(mk_cmd_arr(['system.exec', f"{cmd} 2>&1"]))
         buf = self.recv()
         return buf
 
